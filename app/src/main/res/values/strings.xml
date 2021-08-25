@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">MyApplication</string>
+
+    <string name="search">Search</string>
+    <string name="news_breeze">NewsBreeze</string>
+    <string name="date">29-03-21</string>
+    <string name="title">Loren ipsum dolor sit amet consectetur adi</string>
+
+    <string name="author_name">Heekyong Yang</string>
+    <string name="source_name">Fox News</string>
+    <string name="save">Save</string>
+    <string name="read">Read</string>
+    <string name="content">Washington (CNN)Two US congressmen on Tuesday made an unannounced visit to Afghanistan as the US races to evacuate as many people as possible from the country in the remaining days of the US military… [+2750 chars]</string>
+
+</resources>
