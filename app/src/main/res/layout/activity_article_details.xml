@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ArticleDetails">
+    tools:context=".views.ArticleDetails">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl1"
@@ -17,7 +17,7 @@
         <ImageView
             android:id="@+id/ivArticleImage"
             android:layout_width="match_parent"
-            android:layout_height="320dp"
+            android:layout_height="300dp"
             android:scaleType="fitXY"
             android:src="@drawable/tiger"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +34,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvDate"
+            android:id="@+id/tvArticleDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_20"
@@ -42,14 +42,15 @@
             android:text="@string/date"
             android:textColor="@color/white"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/tvTitle"
+            app:layout_constraintBottom_toTopOf="@id/tvArticleTitle"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="200dp"
+            android:id="@+id/tvArticleTitle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
             android:layout_marginBottom="@dimen/dp_60"
             android:text="@string/title"
             android:textColor="@color/white"
@@ -66,7 +67,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTitle">
+            app:layout_constraintTop_toBottomOf="@id/tvArticleTitle">
 
 
             <ImageView
@@ -85,6 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_10"
                 android:text="@string/author_name"
+                android:maxLength="16"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/tvSourceName"
@@ -119,20 +121,45 @@
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp_20"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ivAuthorImage">
 
-                <TextView
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/content"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_25" />
+                    android:layout_height="match_parent">
 
+                    <TextView
+                        android:id="@+id/tvArticleContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/content"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_22"
+                        android:visibility="invisible"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvErrorText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/error_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/sp_16"
+                    android:visibility="invisible"
+                    />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </ScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

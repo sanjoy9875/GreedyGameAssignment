@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#e4e4e4"
-    tools:context=".MainActivity">
+    tools:context=".views.MainActivity">
 
     <TextView
         android:id="@+id/tvHeadLine"
@@ -27,10 +27,10 @@
         android:layout_margin="@dimen/dp_20"
         android:background="@drawable/edittext_background"
         android:drawableStart="@drawable/ic_search"
-        android:drawablePadding="@dimen/dp_8"
+        android:drawablePadding="@dimen/dp_5"
         android:hint="@string/search"
         android:padding="@dimen/dp_6"
-        android:textSize="@dimen/sp_20"
+        android:textSize="@dimen/sp_18"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvHeadLine" />
@@ -44,5 +44,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etSearch" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/recyclerView"
+        app:layout_constraintBottom_toBottomOf="@id/recyclerView"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

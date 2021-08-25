@@ -10,6 +10,7 @@
     <string name="source_name">Fox News</string>
     <string name="save">Save</string>
     <string name="read">Read</string>
+    <string name="error_text">content not available</string>
     <string name="content">Washington (CNN)Two US congressmen on Tuesday made an unannounced visit to Afghanistan as the US races to evacuate as many people as possible from the country in the remaining days of the US military… [+2750 chars]</string>
 
 </resources>
