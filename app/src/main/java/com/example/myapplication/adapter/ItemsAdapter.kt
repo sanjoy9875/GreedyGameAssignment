@@ -62,6 +62,10 @@ class ItemsAdapter(private var entity: List<ArticlesModel>, private val onItemCl
         return entity.size
     }
 
+    fun filteredList(tempList: MutableList<ArticlesModel>) {
+        entity = tempList
+        notifyDataSetChanged()
+    }
 
     class EntityViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 

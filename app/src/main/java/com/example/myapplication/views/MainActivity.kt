@@ -3,6 +3,8 @@ package com.example.myapplication.views
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -30,6 +32,15 @@ class MainActivity : AppCompatActivity(), OnItemClick {
         progressBar.visibility = View.VISIBLE
 
         /**
+         * going to SavedArticlesActivity
+         * where all saved news are available
+         */
+        ivReadLater.setOnClickListener {
+            val intent = Intent(this, SavedArticles::class.java)
+            startActivity(intent)
+        }
+
+        /**
          * pass a empty-list to the adapter
          **/
         adapter = ItemsAdapter(entityList, this)
@@ -45,8 +56,8 @@ class MainActivity : AppCompatActivity(), OnItemClick {
         viewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(MyViewModel::class.java)
 
-        /**calling getEntity() & observing the live data here to get the data from Room-Database
-         * after getting the data I stop shimmer-effect here
+        /**calling getResponse() & observing the live data here to get the data from API
+         * after getting the data I am stopping progressBar
          * then I add the data to our list & called notifyDataSetChanged()
          **/
         viewModel.getResponse().observe(this, Observer {
@@ -58,6 +69,38 @@ class MainActivity : AppCompatActivity(), OnItemClick {
             adapter.notifyDataSetChanged()
 
         })
+
+        /**
+         * adding a textChangedListener to the EditText for search our itemList
+         * */
+        etSearchItem.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+                filter(s.toString().toLowerCase())
+            }
+        })
+    }
+
+    /**
+     * This method will filter the searched item & add filtered item into a new list
+     * Then this new list will pass to the adapter via filteredList() method
+     **/
+    fun filter(text : String){
+        var tempList = mutableListOf<ArticlesModel>()
+        entityList.forEach {
+            if (it.title?.toLowerCase()?.contains(text)!!){
+                tempList.add(it)
+            }
+        }
+        adapter.filteredList(tempList)
     }
 
 
@@ -85,6 +128,9 @@ class MainActivity : AppCompatActivity(), OnItemClick {
         startActivity(intent)
     }
 
+    /**
+     * saving the news after click the save into our database
+     */
     override fun onSaveClicked(position: Int) {
 
         var responseEntity = ResponseEntity()
@@ -99,4 +145,6 @@ class MainActivity : AppCompatActivity(), OnItemClick {
 
         Toast.makeText(this,"item saved",Toast.LENGTH_SHORT).show()
     }
+
+
 }

@@ -22,13 +22,16 @@ class MyViewModel(val repository: MyRepository) : ViewModel(){
         }
     }
 
+    /**
+     * adding item to our database
+     */
     fun addItem(item : ResponseEntity){
         repository.addItem(item)
     }
 
     /**
-     * getting the list of ResponseEntity
-     * */
+     * getting the list of ResponseEntity from database
+     **/
     fun getEntity(): LiveData<List<ResponseEntity>> {
         return repository.getEntity()
     }
