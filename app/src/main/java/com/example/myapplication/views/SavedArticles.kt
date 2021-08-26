@@ -61,11 +61,11 @@ class SavedArticles : AppCompatActivity() ,OnItemClick{
          **/
         viewModel.getEntity().observe(this, Observer {
 
-            savedRecyclerView.visibility = View.VISIBLE
+                savedRecyclerView.visibility = View.VISIBLE
 
-            entityList.clear()
-            entityList.addAll(it)
-            adapter.notifyDataSetChanged()
+                entityList.clear()
+                entityList.addAll(it)
+                adapter.notifyDataSetChanged()
 
         })
 
