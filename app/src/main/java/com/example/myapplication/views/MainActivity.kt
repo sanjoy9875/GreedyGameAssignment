@@ -1,10 +1,12 @@
 package com.example.myapplication.views
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -15,21 +17,30 @@ import com.example.myapplication.adapter.ItemsAdapter
 import com.example.myapplication.adapter.OnItemClick
 import com.example.myapplication.data.model.ArticlesModel
 import com.example.myapplication.data.model.ResponseEntity
+import com.example.myapplication.network_connectivity.ConnectivityLiveData
 import com.example.myapplication.viewmodel.MyViewModel
 import com.example.myapplication.viewmodel.MyViewmodelFactory
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), OnItemClick {
 
     private lateinit var viewModel: MyViewModel
     private lateinit var adapter: ItemsAdapter
     private var entityList = mutableListOf<ArticlesModel>()
+    private lateinit var connectivityLiveData: ConnectivityLiveData
 
+    @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         progressBar.visibility = View.VISIBLE
+
+        connectivityLiveData= ConnectivityLiveData(application)
 
         /**
          * going to SavedArticlesActivity
@@ -56,19 +67,37 @@ class MainActivity : AppCompatActivity(), OnItemClick {
         viewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(MyViewModel::class.java)
 
-        /**calling getResponse() & observing the live data here to get the data from API
-         * after getting the data I am stopping progressBar
-         * then I add the data to our list & called notifyDataSetChanged()
+
+        /**
+         * Observing LiveData if network is Connected then only call API
+         * If Network not connected fetch the data from Database
          **/
-        viewModel.getResponse().observe(this, Observer {
-            recyclerView.visibility = View.VISIBLE
-            progressBar.visibility = View.GONE
+        connectivityLiveData.observe(this, Observer {isAvailable->
 
-            entityList.clear()
-            entityList.addAll(it.articles as List<ArticlesModel>)
-            adapter.notifyDataSetChanged()
+            if(isAvailable) {
+                /**calling getResponse() & observing the live data here to get the data from API
+                 * after getting the data I am stopping progressBar
+                 * then I add the data to our list & called notifyDataSetChanged()
+                 **/
+                viewModel.getResponse().observe(this, Observer {
+                    recyclerView.visibility = View.VISIBLE
+                    progressBar.visibility = View.GONE
 
+                    entityList.clear()
+                    entityList.addAll(it.articles as List<ArticlesModel>)
+                    adapter.notifyDataSetChanged()
+
+                })
+            }
+                else{
+                Snackbar.make(recyclerView,
+                    "check your internet connection",
+                    Snackbar.LENGTH_LONG)
+                    .show()
+
+            }
         })
+
 
         /**
          * adding a textChangedListener to the EditText for search our itemList
